@@ -1,0 +1,118 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from first-party ecforce client code (github.com/super-studio/ecforce_headless,
+  src/lib/ecforce-sdk/) and the published READMEs of @super_studio/ecforce-ai-agent-server and
+  @super_studio/ecforce-ai-agent-react, cross-checked against SUPER STUDIO's own release notice for
+  ecforce API v2. Where the gated reference at apidoc.ec-force.com is the only source, the field is
+  recorded as unknown rather than guessed.
+scope: ecforce API v2 (admin + customer) unless stated otherwise
+auth_style:
+  ecforce_v2: 'Static per-tenant token in an Authorization: Token token="<token>" header'
+  ai_agent_api: API key via AI_AGENT_API_KEY; short-lived session tokens for browser clients
+  mcp: OAuth 2.1-shaped authorization code + PKCE S256, public client, scope "mcp"
+  see: authentication/super-studio-authentication.yml
+serialization:
+  request: application/json
+  response: application/json
+  document_shape: >-
+    JSON:API. Collections return { data: [ { id, type, attributes, relationships } ], included: [...] }
+    and single resources return { data: {...}, included: [...] }. Related resources are hoisted into
+    included[] and linked back through relationships.<name>.data.id, which the first-party client
+    resolves by matching type + id.
+  evidence: src/lib/ecforce-sdk/admin/products/endpoints.ts
+field_expansion:
+  supported: true
+  style: JSON:API compound documents
+  parameter: include
+  example: /admin/products/{id}?include=thumbnail
+  note: >-
+    Requested relationships are returned in a sibling included[] array rather than nested inside the
+    resource, so a consumer must join on type + id itself.
+filtering:
+  supported: true
+  style: Ransack (Rails)
+  parameter_form: 'q[<attribute_path>_<predicate>]'
+  example: /admin/products?q[product_category_names_cont]=Headless
+  note: >-
+    Predicates are Ransack matchers (_cont, _eq, _in, ...) composed onto association-aware attribute
+    paths. This is a very expressive query surface and it is also a large, undocumented one — the
+    predicate and attribute inventory is not published anonymously.
+pagination:
+  documented: false
+  observed: unknown
+  note: >-
+    No pagination parameters or response fields appear in first-party sample code, which fetches
+    small filtered collections without paging. The gated reference is the only source. Recorded as
+    unknown rather than assumed.
+versioning:
+  style: URL path segment
+  current: v2
+  variants:
+  - v2/admin
+  - v2/customer
+  history: >-
+    v2 released April 2022 and made the official version; v1/admin deprecated December 2022. v2 kept
+    v1's request and success-response specifications and changed only the error responses.
+  see: lifecycle/super-studio-lifecycle.yml
+error_envelope:
+  format: vendor JSON, not RFC 9457
+  shape: '{ "errors": [ { "message": "..." } ] }'
+  see: errors/super-studio-problem-types.yml
+request_id_tracing:
+  documented: false
+  note: No correlation or request-id header appears in first-party code or public docs.
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    No idempotency key, no retry-safety guidance and no deduplication window appear in any public
+    SUPER STUDIO material. Deliberately NOT claimed. This is a real gap for an API whose write
+    surface includes orders and subscriptions.
+dry_run_mode:
+  supported: unknown
+  note: No dry-run, preview or validate-only mode is documented publicly.
+rate_limit_signaling:
+  documented: false
+  see: rate-limits/super-studio-rate-limits.yml
+reversibility:
+  state: undocumented
+  grade: null
+  api_is_read_only: false
+  summary: >-
+    ecforce has a substantial write surface — orders, subscriptions, customers, LP template code
+    (writable through the MCP server) — but SUPER STUDIO publishes no anonymous documentation of any
+    reversal operation, any operationId for one, or any window inside which a write can be taken
+    back. The ecforce admin product plainly supports order cancellation and returns as business
+    functions; what is missing is a public statement of the API-level reversal path and its window.
+    No window is asserted here, because inventing one is the one error in this artifact that could
+    cost a user real money.
+  write_surfaces:
+  - surface: ecforce v2 admin API
+    reversal_operation: unknown
+    window: unknown
+    docs: https://apidoc.ec-force.com/apidoc/v2/admin/index.html
+    docs_status: 401
+  - surface: ecforce AI MCP (LP template writes, ma delivery settings)
+    reversal_operation: unknown
+    window: unknown
+    docs: https://ec-force.com/information/20260804
+    note: >-
+      The launch announcement describes an agent writing HTML/CSS/JavaScript straight into a live LP
+      template. Nothing published says whether that write is versioned or revertible.
+  - surface: ecforce AI Agent API (credit consumption)
+    reversal_operation: none
+    window: none
+    note: >-
+      Model proxy calls consume project credits and are not reversible by design; the SDK exposes
+      internalUsage.getUsageSummary() so a caller can read remaining credits, which is a mitigation,
+      not a reversal.
+  remediation: >-
+    Publish, per write operation, the reversal operation and the window it works in. An agent needs
+    to know before it acts whether the act can be taken back.
+cross_links:
+  errors: errors/super-studio-problem-types.yml
+  lifecycle: lifecycle/super-studio-lifecycle.yml
+  authentication: authentication/super-studio-authentication.yml
+  rate_limits: rate-limits/super-studio-rate-limits.yml
+  webhooks: asyncapi/super-studio-ecforce-webhooks.yml

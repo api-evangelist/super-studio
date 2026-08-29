@@ -1,0 +1,54 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from first-party client code — github.com/super-studio/ecforce_headless
+  src/lib/ecforce-sdk/shared/index.ts and src/lib/ecforce-sdk/customer/session/types.ts — because no
+  OpenAPI and no public error reference exist to derive from or to search.
+format: vendor-json
+rfc9457: false
+note: >-
+  ecforce does not use application/problem+json. Its error envelope is a JSON object with a top-level
+  errors[] array of objects carrying a message string. Titles, codes and remediation for individual
+  errors are published only in the Basic-auth-gated reference at apidoc.ec-force.com, so this catalog
+  records the envelope and the status semantics that first-party code actually branches on — nothing
+  more. The v2 release notice states that v2 kept v1's request and success-response shapes but
+  CHANGED the error responses, so v1-era error handling is not portable.
+envelope:
+  content_type: application/json
+  shape: '{ "errors": [ { "message": "<human readable message>" } ] }'
+  fields:
+  - name: errors
+    type: array
+    required: true
+  - name: errors[].message
+    type: string
+    required: true
+    description: Human-readable message; the first-party client joins these with ", " for display.
+problem_types:
+- status: 404
+  name: NotFound
+  meaning: The addressed resource does not exist.
+  client_behaviour: >-
+    The first-party SDK special-cases 404 and raises a distinct NotFoundError rather than a generic
+    failure, so 404 is a modelled outcome and not just an error.
+  source: src/lib/ecforce-sdk/shared/index.ts
+- status: 4xx
+  name: RequestError
+  meaning: Any other client error; body carries the errors[] envelope.
+  client_behaviour: Generic throw carrying status, statusText and the raw body.
+  source: src/lib/ecforce-sdk/shared/index.ts
+- status: 5xx
+  name: ServerError
+  meaning: Server-side failure.
+  client_behaviour: Same generic path as 4xx; no retry or backoff logic is demonstrated.
+  source: src/lib/ecforce-sdk/shared/index.ts
+ai_agent_api_errors:
+- code: NOT_FOUND
+  meaning: >-
+    Returned by the ecforce AI Agent API when internalTerms.accept or internalUser.resolve is called
+    for a user that does not exist and createIfMissing is false.
+  source: "@super_studio/ecforce-ai-agent-server README, v1.5.0"
+gaps:
+- No published error code reference is reachable anonymously.
+- No RFC 9457 problem+json, no type URIs, no machine-readable error taxonomy.
+- Rate-limit and quota error shapes are undocumented.

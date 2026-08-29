@@ -1,0 +1,97 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  First-party sources only — github.com/super-studio/ecforce_headless
+  (src/lib/ecforce-sdk/shared/index.ts, src/env.js), the READMEs of
+  @super_studio/ecforce-ai-agent-server and @super_studio/ecforce-ai-agent-react on
+  registry.npmjs.org, and the anonymously served RFC 8414 metadata at agent.ec-force.com.
+note: >-
+  derive-authentication.py was not run: it derives from openapi/, and no OpenAPI is published for
+  any SUPER STUDIO API. Everything below is quoted from code and documentation SUPER STUDIO
+  published itself. Three different APIs use three different schemes.
+apis:
+- api: ecforce API v2
+  schemes:
+  - id: ecforce_admin_token
+    type: apiKey
+    in: header
+    name: Authorization
+    format: 'Token token="<access token>"'
+    description: >-
+      Rails-style token authentication. The token belongs to an "API connection user" created in the
+      ecforce admin under システム管理 > メンバー管理 (System Admin > Member Management); the access
+      token and the API login password are shown once, immediately after issuance, and cannot be
+      re-read afterwards. The API connection option is a paid contract add-on.
+    evidence:
+      file: src/lib/ecforce-sdk/shared/index.ts
+      repo: https://github.com/super-studio/ecforce_headless
+      quote: 'Authorization: `Token token="${env.ECF_API_TOKEN}"`'
+  - id: ecforce_customer_session
+    type: http
+    scheme: session
+    description: >-
+      v2/customer authenticates as a shopper. The first-party headless sample signs in with
+      POST /customers/sign_in and carries the resulting session for My Page-equivalent calls.
+    evidence:
+      file: src/lib/ecforce-sdk/customer/session/endpoints.ts
+      repo: https://github.com/super-studio/ecforce_headless
+  content_type: application/json
+  transport_note: >-
+    Base host is per-merchant and merchant-configurable — integration guides show the form
+    https://api.<shop-domain> and note the "api" label may differ per shop. There is no single
+    shared ecforce API host.
+- api: ecforce AI Agent API
+  schemes:
+  - id: ai_agent_api_key
+    type: apiKey
+    in: header
+    name: unspecified
+    description: >-
+      An API key issued in the ecforce admin screens, supplied to the first-party server SDK as the
+      AI_AGENT_API_KEY environment variable. The SDK sets the header internally and the published
+      README does not name it, so the header name is recorded as unspecified rather than guessed.
+    evidence:
+      package: "@super_studio/ecforce-ai-agent-server"
+      version: 1.5.0
+      quote: '`AI_AGENT_API_KEY`: 必須。管理画面で発行した API キー'
+  - id: agent_session_token
+    type: http
+    scheme: bearer
+    bearer_format: JWT
+    description: >-
+      Short-lived chat session tokens minted server-side by client.internalChat.createSession() and
+      handed to the browser components. Shape is { token, expiresAt }. The SDK depends on jose and
+      @panva/hkdf, so these are signed/derived tokens rather than opaque strings.
+  - id: mcp_token_secret
+    type: apiKey
+    in: header
+    name: unspecified
+    description: >-
+      MCP_TOKEN_SECRET signs and verifies MCP tokens when a tenant application exposes its own MCP
+      tools alongside ecforce's. Required only when implementing MCP.
+- api: ecforce AI MCP
+  schemes:
+  - id: mcp_oauth
+    type: oauth2
+    flow: authorizationCode
+    pkce: S256
+    authorization_url: https://agent.ec-force.com/mcp/oauth/authorize
+    token_url: https://agent.ec-force.com/mcp/oauth/token
+    revocation_url: https://agent.ec-force.com/mcp/oauth/revoke
+    registration_url: https://agent.ec-force.com/mcp/oauth/register
+    scopes:
+    - mcp
+    token_endpoint_auth_methods:
+    - none
+    description: >-
+      Public-client OAuth 2.1-shaped flow: no client secret, PKCE S256 mandatory, RFC 7591 dynamic
+      client registration open to anonymous callers, refresh tokens supported. This is the pattern
+      an MCP client is expected to complete on its own with no pre-registration.
+    evidence:
+      url: https://agent.ec-force.com/.well-known/oauth-authorization-server
+      status: 200
+mfa:
+  available: true
+  scope: ecforce administrator accounts
+  source: https://ec-force.com/security
+  note: Two-factor authentication and IP-address restriction are offered for admin access.

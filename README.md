@@ -64,5 +64,10 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Super Studio is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+SUPER STUDIO (株式会社SUPER STUDIO) is a Tokyo-based commerce software company founded in 2014 that builds **ecforce**, an AI commerce platform used by Japanese D2C and subscription brands. This profile covers three distinct API surfaces: the multi-tenant ecforce REST API v2 (JSON:API shaped, token authenticated, served from each merchant's own host), the ecforce AI Agent API at `agent.ec-force.com`, and an OAuth-protected remote MCP server launched 2026-08-04 for external AI tools.
+
+- https://www.super-studio.jp/ — company
+- https://ec-force.com/ — ecforce product
+- https://github.com/super-studio — GitHub organization
+
+The previous `Website` pointer on this profile was `https://www.nasdaqprivatemarket.com/`, the secondary-market venue this company was harvested from. That is a trading venue's listing page, not SUPER STUDIO's web presence, and it has been replaced.

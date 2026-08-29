@@ -1,0 +1,107 @@
+# SUPER STUDIO
+
+> SUPER STUDIO (株式会社SUPER STUDIO) is a Tokyo commerce software company founded in 2014. Its
+> product, ecforce, is an AI commerce platform for Japanese D2C and subscription brands covering
+> storefront, order management, subscriptions, CRM, marketing automation and BI. This file is an
+> independent third-party summary published by API Evangelist, NOT by SUPER STUDIO.
+
+Generated: 2026-08-29
+Method: generated (from apis.yml and the artifacts in this repository)
+Source: https://github.com/api-evangelist/super-studio
+Provenance: SUPER STUDIO serves no llms.txt of its own — https://ec-force.com/llms.txt and
+https://www.super-studio.jp/llms.txt both return 404 (probed 2026-08-29).
+
+## What you can actually call
+
+There are three distinct API surfaces and they do not share a host, an auth scheme, or a docs page.
+
+1. **ecforce API v2** — the platform REST API, split into `v2/admin` (administrator scope, mirrors
+   the management screens) and `v2/customer` (shopper scope, mirrors My Page). Multi-tenant: the
+   base host is the merchant's own, in the form `https://api.<shop-domain>`, and the host label is
+   merchant-configurable. There is NO shared ecforce API host. Requires a paid API integration
+   option on the ecforce contract.
+2. **ecforce AI Agent API** — `https://agent.ec-force.com`. Called through the first-party npm SDK
+   `@super_studio/ecforce-ai-agent-server`. Issues chat session tokens, resolves users, records
+   terms acceptance, returns per-project credit usage, and proxies OpenAI / Google Vertex /
+   Anthropic model calls billed to an ecforce project.
+3. **ecforce AI MCP** — a remote, OAuth-protected Model Context Protocol server launched
+   2026-08-04, for paid ecforce AI contracts. Verified clients: Claude Code, Cursor, ChatGPT app
+   (Codex).
+
+## Authentication
+
+- ecforce v2: `Authorization: Token token="<access token>"`. The token belongs to an API connection
+  user created under System Admin > Member Management and is displayed exactly once at issuance.
+- ecforce AI Agent API: API key supplied as `AI_AGENT_API_KEY`; browser clients get short-lived
+  session tokens `{ token, expiresAt }` minted server-side.
+- ecforce AI MCP: OAuth authorization code + PKCE S256, public client, single scope `mcp`.
+  Authorization server metadata is served anonymously at
+  https://agent.ec-force.com/.well-known/oauth-authorization-server and RFC 7591 dynamic client
+  registration is open at https://agent.ec-force.com/mcp/oauth/register.
+
+## Conventions
+
+- Serialization: JSON:API compound documents — `data[]` with `id`/`type`/`attributes`/
+  `relationships`, related resources hoisted into `included[]`. Media type is `application/json`,
+  not `application/vnd.api+json`.
+- Relationship expansion: `?include=<relationship>`.
+- Filtering: Ransack predicates, `q[<attribute_path>_<predicate>]`, e.g.
+  `q[product_category_names_cont]=Headless`.
+- Errors: `{ "errors": [ { "message": "..." } ] }`. Not RFC 9457. 404 is a modelled outcome.
+- Webhooks: HTTPS POST, event name in the `x-ecf-event` request header. Known events:
+  `product_created`, `product_updated`, `product_destroyed`. Separately contracted paid option.
+  No signature verification scheme is published.
+
+## What is NOT available
+
+Say these plainly rather than guessing:
+
+- No OpenAPI, Swagger, GraphQL SDL, AsyncAPI, Postman collection or JSON Schema is published
+  anywhere. Probed across ec-force.com, api.ec-force.com, apidoc.ec-force.com, agent.ec-force.com
+  and docs.ec-force.com on 2026-08-29 — all miss.
+- The human API reference at https://apidoc.ec-force.com/apidoc/v2/admin/index.html is behind HTTP
+  Basic auth (401, `WWW-Authenticate: Basic`). Credentials go to contracted customers.
+- No published rate limits, no rate-limit response headers, no documented 429 behaviour.
+- No idempotency key or retry-safety guidance.
+- No documented reversal operation or reversal window for any write, including the MCP server's
+  ability to write code straight into a live LP template.
+- No pagination documentation.
+- No status page. `ecforce.statuspage.io` is an unclaimed Statuspage subdomain that redirects to
+  statuspage.io — do not treat it as an ecforce status page.
+- No `security.txt`, no vulnerability disclosure program, no bug bounty.
+- No A2A agent card at `/.well-known/agent-card.json` or `/.well-known/agent.json` on any host.
+- `mcp.ec-force.com` resolves and returns 200 but serves an unmodified create-next-app placeholder.
+  It is not an MCP endpoint. Do not send it traffic.
+
+## First-party packages (npm, scope @super_studio)
+
+- @super_studio/ecforce-ai-agent-server 1.5.0 (2026-08-25) — ecforce AI Agent server SDK
+- @super_studio/ecforce-ai-agent-react 1.5.0 (2026-08-25) — ecforce AI chat UI for React
+- @super_studio/ecforce_ui_albers 6.1.0 (2026-08-25) — "albers" design system components
+- @super_studio/futsuno-ui 1.0.7 (2026-05-12)
+- @super_studio/ecforce-nextra 0.1.10 and its docs/blog themes (2026-02-13)
+- @super_studio/mockup-upload 1.0.3 (2026-03-02)
+
+`ecforce-theme-cli` on npm is a community package (github.com/piouc), not SUPER STUDIO's.
+
+## Plans
+
+Published annual contracts in JPY, tax exclusive. Standard: ¥148,000 initial + ¥49,800/month,
+2,000 orders/month included, ¥30 per order over. Expert: ¥248,000 initial + ¥99,800/month,
+uncapped, ¥30 per order. Migration and Enterprise are quoted. API integration, webhooks and
+ecforce AI are separately contracted paid options with unpublished prices.
+https://ec-force.com/product_plan
+
+## Links
+
+- Company: https://www.super-studio.jp/
+- Product: https://ec-force.com/
+- Theme / Liquid docs: https://docs.ec-force.com/
+- API reference (gated): https://apidoc.ec-force.com/apidoc/v2/admin/index.html
+- Customer FAQ: https://support.ec-force.com/hc/ja
+- Announcements: https://ec-force.com/information
+- Engineering blog: https://zenn.dev/p/superstudio
+- GitHub: https://github.com/super-studio
+- Reference headless implementation: https://github.com/super-studio/ecforce_headless
+- Security posture and certifications: https://ec-force.com/security
+- MCP launch announcement: https://ec-force.com/information/20260804

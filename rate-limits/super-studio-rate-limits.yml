@@ -1,0 +1,43 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  Searched https://ec-force.com/product_plan, https://docs.ec-force.com/, the indexed ecforce FAQ,
+  the first-party github.com/super-studio/ecforce_headless client, and the READMEs of the
+  @super_studio ecforce AI Agent SDKs.
+limit_count: 0
+note: >-
+  SUPER STUDIO publishes no rate limits for any of its APIs anonymously. No numeric limit, no window,
+  no burst allowance and no response-header contract appears in any public material. The first-party
+  client at github.com/super-studio/ecforce_headless does not read any rate-limit header, does not
+  branch on 429 and implements no backoff — it treats every non-2xx other than 404 identically —
+  which is a strong indication that no runtime rate-limit signal is being surfaced to integrators.
+  Whatever limits exist are enforced silently or documented only in the Basic-auth-gated reference at
+  apidoc.ec-force.com. This is an honest zero, not an unchecked field.
+limits: []
+response_headers:
+  documented: false
+  probed: false
+  note: >-
+    Cannot be probed: every ecforce API surface requires a per-tenant credential, so there is no
+    unauthenticated response whose headers could be observed.
+exhaustion_status_code: not documented
+retry_after: not documented
+adjacent_quotas:
+- surface: ecforce plan
+  type: commercial quota, not a rate limit
+  detail: >-
+    Standard includes 2,000 orders/month with JPY 30 per order over; Expert is uncapped at JPY 30
+    per order. These meter business volume, not request rate.
+  source: https://ec-force.com/product_plan
+- surface: ecforce AI
+  type: credit quota
+  detail: >-
+    Per-project credit allowance with plan, totalUsedCredits, creditLimit, remainingCredits and
+    billingPeriod readable via internalUsage.getUsageSummary() in
+    @super_studio/ecforce-ai-agent-server. A real, machine-readable consumption signal — but a
+    billing meter, not a request-rate limit.
+  source: "@super_studio/ecforce-ai-agent-server README, v1.5.0"
+remediation: >-
+  Publish the per-key request limit and window, and return RateLimit-Limit / RateLimit-Remaining /
+  RateLimit-Reset (or X-RateLimit-*) plus Retry-After on 429. An agent needs the runtime signal, not
+  a number in a gated PDF.

@@ -1,18 +1,103 @@
 aid: super-studio
-name: Super Studio
-description: 'Super Studio is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+name: SUPER STUDIO
+description: >-
+  SUPER STUDIO (株式会社SUPER STUDIO) is a Tokyo-based commerce software company founded in 2014 that
+  builds "ecforce", an AI commerce platform used by Japanese D2C and subscription brands for
+  storefronts, order management, subscriptions, CRM, marketing automation and BI. The platform is
+  multi-tenant and API-integrable: ecforce exposes a versioned REST admin/customer API (v2, JSON:API
+  shaped, token authenticated) on each merchant's own shop host, a webhook surface signalled with an
+  x-ecf-event header, and — since August 2026 — an OAuth-protected remote MCP server under
+  agent.ec-force.com that lets external AI tools such as Claude Code, Cursor and the ChatGPT app read
+  ecforce order and product data and drive ecforce bi, ma and AIdp. SUPER STUDIO also publishes
+  first-party npm packages for the ecforce AI Agent (server SDK and React chat UI) and the "albers"
+  design system. The API reference itself sits behind HTTP Basic auth at apidoc.ec-force.com and API
+  integration is a paid contract option.
 url: https://raw.githubusercontent.com/api-evangelist/super-studio/refs/heads/main/apis.yml
+image: https://www.super-studio.jp/superstudio_ogp.png?version=2
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment
 specificationVersion: '0.20'
 created: '2026-08-29'
 modified: '2026-08-29'
 tags:
 - Company
-apis: []
+- E-Commerce
+- Commerce
+- Subscription Commerce
+- Order Management
+- Marketing Automation
+- Business Intelligence
+- SaaS
+- Artificial Intelligence
+- Agents
+- MCP
+- Japan
+apis:
+- name: ecforce API v2
+  description: >-
+    The ecforce platform REST API. Version 2 splits into v2/admin (administrator-scoped, mirroring
+    the ecforce management screens) and v2/customer (shopper-scoped, mirroring My Page). Responses
+    are JSON:API shaped — a data[] document with type/id/attributes/relationships plus an included[]
+    compound-document array driven by an include query parameter — and collection filtering uses
+    Ransack-style q[<attribute>_<predicate>] parameters. Authentication is a per-merchant API
+    connection user whose access token is sent as Authorization: Token token="<token>". The API is a
+    paid contract option and the reference is served only to authenticated customers.
+  humanURL: https://apidoc.ec-force.com/apidoc/v2/admin/index.html
+  baseURL: https://api.{shop-domain}
+  tags:
+  - E-Commerce
+  - Order Management
+  - REST
+  properties:
+  - type: APIReference
+    url: https://apidoc.ec-force.com/apidoc/v2/admin/index.html
+  - type: Authentication
+    url: authentication/super-studio-authentication.yml
+  - type: Webhooks
+    url: asyncapi/super-studio-ecforce-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/super-studio-problem-types.yml
+  - type: SourceCode
+    url: https://github.com/super-studio/ecforce_headless
+- name: ecforce AI Agent API
+  description: >-
+    The internal HTTP API behind ecforce AI, called from the first-party
+    @super_studio/ecforce-ai-agent-server npm SDK. It issues chat session tokens, resolves users,
+    records terms acceptance, returns per-project credit usage summaries (/v1/internal/usage/summary)
+    and proxies OpenAI / Google Vertex / Anthropic model calls so usage is billed against an ecforce
+    project. Authentication is an API key issued in the ecforce admin screens and supplied as
+    AI_AGENT_API_KEY; a dev environment is published at https://dev-agent.ec-force.com.
+  humanURL: https://www.npmjs.com/package/@super_studio/ecforce-ai-agent-server
+  baseURL: https://agent.ec-force.com
+  tags:
+  - Artificial Intelligence
+  - Agents
+  properties:
+  - type: SDKs
+    url: https://www.npmjs.com/package/@super_studio/ecforce-ai-agent-server
+  - type: TermsOfService
+    url: https://agent.ec-force.com/terms
+- name: ecforce AI MCP
+  description: >-
+    A remote, OAuth-protected Model Context Protocol server launched 2026-08-04 that lets external AI
+    tools (Claude Code, Cursor, the ChatGPT app/Codex) read ecforce order and product data, query
+    ecforce AIdp knowledge, run ecforce bi analysis, configure ecforce ma delivery and write LP
+    template code, all inside the signed-in ecforce account's permission scope. The authorization
+    server metadata is served anonymously at agent.ec-force.com and advertises RFC 7591 dynamic
+    client registration, authorization_code + refresh_token grants, PKCE S256 and a single "mcp"
+    scope. Available to paid ecforce AI contracts only.
+  humanURL: https://ec-force.com/information/20260804
+  baseURL: https://agent.ec-force.com
+  tags:
+  - MCP
+  - Agents
+  properties:
+  - type: MCPServer
+    url: mcp/super-studio-mcp.yml
+  - type: OAuthScopes
+    url: scopes/super-studio-scopes.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +105,91 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.super-studio.jp/
+- type: ProductWebsite
+  url: https://ec-force.com/
+- type: Documentation
+  url: https://docs.ec-force.com/
+- type: APIReference
+  url: https://apidoc.ec-force.com/apidoc/v2/admin/index.html
+- type: HelpCenter
+  url: https://support.ec-force.com/hc/ja
+- type: Support
+  url: https://ec-force.com/support
+- type: Blog
+  url: https://ec-force.com/blog/
+- type: TechnicalBlog
+  url: https://zenn.dev/p/superstudio
+- type: GitHubOrganization
+  url: https://github.com/super-studio
+- type: Pricing
+  url: https://ec-force.com/product_plan
+- type: SignUp
+  url: https://ec-force.com/contact/new
+- type: TermsOfService
+  url: https://ec-force.com/info/customer_term
+- type: PrivacyPolicy
+  url: https://www.super-studio.jp/privacy
+- type: Compliance
+  url: https://ec-force.com/security
+- type: GettingStarted
+  url: https://ec-force.com/startguide
+- type: Packages
+  url: packages/super-studio-packages.yml
+- type: SDKs
+  url: packages/super-studio-packages.yml
+- type: WellKnown
+  url: well-known/super-studio-well-known.yml
+- type: MCPServer
+  url: mcp/super-studio-mcp.yml
+- type: LLMsTxt
+  url: llms/super-studio-llms.txt
+- type: Conformance
+  url: conformance/super-studio-conformance.yml
+- type: ErrorCatalog
+  url: errors/super-studio-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/super-studio-lifecycle.yml
+- type: OAuthScopes
+  url: scopes/super-studio-scopes.yml
+- type: Authentication
+  url: authentication/super-studio-authentication.yml
+- type: DomainSecurity
+  url: security/super-studio-domain-security.yml
+- type: TrustCenter
+  url: security/super-studio-trust-center.yml
+- type: Conventions
+  url: conventions/super-studio-conventions.yml
+- type: ChangeLog
+  url: changelog/super-studio-changelog.yml
+- type: Components
+  url: components/super-studio-components.yml
+- type: Webhooks
+  url: asyncapi/super-studio-ecforce-webhooks.yml
+- type: Plans
+  url: plans/super-studio-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/super-studio-rate-limits.yml
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Enriched from first-party sources despite a gated reference — the ecforce API reference at
+    apidoc.ec-force.com is HTTP Basic gated (401, WWW-Authenticate: Basic) and the customer FAQ at
+    support.ec-force.com refuses our crawler (403), so no OpenAPI exists to capture; the contract
+    shape, auth scheme, webhook events and error envelope were instead read verbatim from SUPER
+    STUDIO's own published code and npm READMEs, and the ecforce AI MCP OAuth authorization server
+    was probed live.
+  evidence:
+  - url: https://apidoc.ec-force.com/apidoc/v2/admin/index.html
+    status: 401
+  - url: https://agent.ec-force.com/.well-known/oauth-authorization-server
+    status: 200
+  - url: https://support.ec-force.com/hc/ja
+    status: 403
+  checked: '2026-08-29'

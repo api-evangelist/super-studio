@@ -1,0 +1,126 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from first-party ecforce client code and the anonymously served RFC 8414 metadata at
+  agent.ec-force.com; compliance claims searched from https://ec-force.com/security.
+note: >-
+  No OpenAPI, AsyncAPI or GraphQL SDL is published by SUPER STUDIO, so every assertion below rests
+  either on a live probe or on quoted first-party code. Nothing is asserted from marketing prose
+  alone except the certification claims, which are flagged as such.
+standards:
+- id: json:api
+  conforms: true
+  confidence: high
+  evidence: >-
+    The ecforce v2 API returns JSON:API compound documents — { data: [ { id, type, attributes,
+    relationships } ], included: [...] } — and supports the include query parameter to hoist related
+    resources into included[]. Read from first-party code at
+    github.com/super-studio/ecforce_headless src/lib/ecforce-sdk/admin/products/endpoints.ts and
+    .../types.ts. SUPER STUDIO does not advertise JSON:API conformance anywhere; the contract shape
+    does.
+  caveat: >-
+    Shape conformance only. The JSON:API media type (application/vnd.api+json), links objects, and
+    the spec's own pagination/error members are not observed — the client sends and receives
+    application/json and the error envelope is a bare errors[] of message strings, not JSON:API
+    error objects.
+- id: oauth2
+  conforms: true
+  confidence: high
+  evidence: >-
+    https://agent.ec-force.com/.well-known/oauth-authorization-server returns 200 application/json
+    with issuer, authorization_endpoint, token_endpoint, registration_endpoint, revocation_endpoint,
+    grant_types_supported [authorization_code, refresh_token] and scopes_supported [mcp].
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  confidence: high
+  evidence: The .well-known/oauth-authorization-server document above.
+- id: rfc7591
+  name: OAuth 2.0 Dynamic Client Registration
+  conforms: true
+  confidence: high
+  evidence: >-
+    POST https://agent.ec-force.com/mcp/oauth/register with client_name and redirect_uris returned
+    200 with a client_id, client_id_issued_at, grant_types, response_types, scope "mcp" and
+    token_endpoint_auth_method "none". Probed anonymously 2026-08-29.
+- id: rfc7636
+  name: PKCE
+  conforms: true
+  confidence: high
+  evidence: code_challenge_methods_supported ["S256"] in the authorization server metadata.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-protected-resource returns 404 on agent.ec-force.com, and so does
+    /.well-known/oauth-protected-resource/mcp. An MCP client cannot discover the resource server
+    from the resource itself; only the authorization server advertises.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  confidence: medium
+  evidence: >-
+    SUPER STUDIO announced an MCP connection feature for ecforce AI on 2026-08-04 naming Claude
+    Code, Cursor and the ChatGPT app as verified clients, and the OAuth surface above is
+    MCP-shaped (public client, dynamic registration, PKCE, single "mcp" scope). Confidence is
+    medium, not high, because no anonymous tools/list is reachable so the protocol version and tool
+    schemas were not observed.
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: 'Error envelope is a vendor errors[] array of message objects, not application/problem+json.'
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document is served at any probed location on ec-force.com,
+    api.ec-force.com, apidoc.ec-force.com, agent.ec-force.com or docs.ec-force.com. The human
+    reference at apidoc.ec-force.com is HTTP Basic gated (401).
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A webhook surface exists (x-ecf-event header, product_created/updated/destroyed) but no AsyncAPI
+    document is published.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration 404s on every SUPER STUDIO host probed.
+- id: idempotency
+  conforms: false
+  evidence: No idempotency key, header or retention window is documented in any public material.
+- id: pagination
+  conforms: unknown
+  evidence: Not observable anonymously; the gated reference is the only source.
+domain_standards:
+  note: >-
+    REWARD-ONLY check. Japanese D2C / subscription commerce has no mandatory interchange standard
+    equivalent to SCIM, OData, OpenRTB or HL7v2, and SUPER STUDIO's contract declares none. Probed
+    for and not found rather than assumed absent.
+  probed:
+  - standard: OpenRTB
+    found: false
+  - standard: SCIM
+    found: false
+  - standard: OData
+    found: false
+  - standard: GS1 / EDI (EDIFACT, X12)
+    found: false
+  - standard: ISO 20022
+    found: false
+  found: []
+compliance_certifications:
+  method: searched
+  source: https://ec-force.com/security
+  note: >-
+    Published by SUPER STUDIO on its own security page. Certificate registration numbers are not
+    published, so these are recorded as vendor claims, not as verified registry lookups.
+  certifications:
+  - name: ISO/IEC 27001 (ISMS)
+    claimed: true
+  - name: PrivacyMark (JIS Q 15001)
+    claimed: true
+  - name: PCI DSS
+    claimed: true
+    scope: credit card processing
+  - name: SOC 1 Type 1
+    claimed: true
+  - name: SOC 2 Type 1
+    claimed: true

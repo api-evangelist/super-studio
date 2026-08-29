@@ -1,0 +1,42 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  github.com/super-studio/ecforce_headless (src/app/api/ecf-webhook/route.ts) and the SUPER STUDIO
+  engineering article https://zenn.dev/superstudio/articles/91debfc4c6cb40, both first-party.
+note: >-
+  SUPER STUDIO publishes no AsyncAPI document for ecforce and no public event catalog, so this is a
+  webhook catalog, not a spec. Only the events named in first-party material are listed. The full
+  ecforce event list lives in the customer-gated FAQ; do not read the absence of an event here as
+  evidence it does not exist.
+asyncapi_published: false
+webhooks:
+  supported: true
+  availability: >-
+    Webhook delivery is a separately contracted paid option — "Webhook 機能を使いたい場合、別途
+    オプションを申し込む必要があります" (SUPER STUDIO, Zenn).
+  transport: HTTPS POST with a JSON body to a subscriber-configured URL
+  event_type_header: x-ecf-event
+  event_type_location: HTTP request header (not the body)
+  signature_verification:
+    documented: false
+    note: >-
+      The first-party sample explicitly leaves this unimplemented — its handler carries the comment
+      "// TODO: Check webhook secret" — so no signing scheme is demonstrated in public material.
+  events:
+  - name: product_created
+    resource: product
+    description: A product was created.
+    source: first-party sample handler
+  - name: product_updated
+    resource: product
+    description: A product was updated.
+    source: first-party sample handler
+  - name: product_destroyed
+    resource: product
+    description: A product was deleted.
+    source: first-party sample handler
+  event_count: 3
+  consumer_pattern: >-
+    The reference consumer switches on the x-ecf-event header and revalidates a cache tag for
+    product events, ignoring every other topic — implying ecforce emits topics beyond the three
+    product events above.

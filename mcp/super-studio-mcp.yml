@@ -1,0 +1,99 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  Provider announcement https://ec-force.com/information/20260804 (2026-08-04) plus anonymous probes
+  of agent.ec-force.com on 2026-08-29 — /.well-known/oauth-authorization-server returned RFC 8414
+  metadata (200 application/json) and /mcp/oauth/register accepted an RFC 7591 dynamic client
+  registration.
+name: ecforce AI MCP
+status: published
+vendor: SUPER STUDIO
+product: ecforce AI
+launched: '2026-08-04'
+deployment:
+  mode: remote
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+  issuer: https://agent.ec-force.com
+  authorization_endpoint: https://agent.ec-force.com/mcp/oauth/authorize
+  token_endpoint: https://agent.ec-force.com/mcp/oauth/token
+  registration_endpoint: https://agent.ec-force.com/mcp/oauth/register
+  revocation_endpoint: https://agent.ec-force.com/mcp/oauth/revoke
+  endpoint_note: >-
+    The transport URL an MCP client POSTs to is NOT published anonymously and is deliberately left
+    null rather than guessed. It is documented only in the customer-gated FAQ article
+    "外部AIツールからecforce AIのMCPツール接続を利用する" on support.ec-force.com (403 to our crawler).
+    What IS anonymously verified is the authorization server: agent.ec-force.com serves RFC 8414
+    metadata whose issuer is https://agent.ec-force.com and whose OAuth endpoints all live under
+    /mcp/oauth/*, and POST /mcp/oauth/register returns a real client_id. Probes of /mcp, /sse,
+    /api/mcp, /mcp/mcp and /mcp/sse all miss; /{anything}/mcp 307s to /api/{anything}/signin, but so
+    does /{anything}/foo, so that redirect is the tenant middleware and NOT evidence of a per-project
+    MCP path. Note also that the subdomain mcp.ec-force.com resolves and returns 200 but serves an
+    unmodified create-next-app placeholder page on Vercel — it is not an MCP endpoint.
+availability: >-
+  Paid ecforce AI contracts only. Which tools a caller sees depends on the ecforce services the
+  tenant has contracted and on the signed-in ecforce account's permission scope.
+clients_verified_by_vendor:
+- Claude Code
+- Cursor
+- ChatGPT app (Codex)
+oauth:
+  scopes_supported:
+  - mcp
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  response_types_supported:
+  - code
+  code_challenge_methods_supported:
+  - S256
+  token_endpoint_auth_methods_supported:
+  - none
+  dynamic_client_registration: true
+  metadata_file: ../well-known/super-studio-agent-oauth-authorization-server.json
+capabilities:
+  note: >-
+    Capability areas named in the provider's own launch announcement. These are product capabilities,
+    NOT a tools/list manifest — the live tool names and inputSchemas require an authenticated
+    tools/list against a paid tenant, which we did not and will not perform. Nothing below is a
+    tool identifier.
+  areas:
+  - product: ecforce
+    described_as: Reference and confirm order and product information
+  - product: ecforce AIdp
+    described_as: Reference the customer data platform knowledge base
+  - product: ecforce bi
+    described_as: Run analysis
+  - product: ecforce ma
+    described_as: Configure marketing-automation delivery settings
+  - product: ecforce
+    described_as: Write HTML/CSS/JavaScript directly into an ecforce LP template
+tools: []
+tools_note: >-
+  Empty on purpose. No anonymous tools/list is reachable and the provider publishes no tool list, so
+  there is nothing real to record. An MCP_TOKEN_SECRET environment variable in the first-party
+  @super_studio/ecforce-ai-agent-react README confirms that tenant applications may also expose
+  their own MCP tools by verifying an ecforce-signed token, which means the tool surface is
+  per-tenant extensible.
+evidence:
+- url: https://agent.ec-force.com/.well-known/oauth-authorization-server
+  status: 200
+  note: RFC 8414 metadata, 534 bytes, saved verbatim
+- url: https://agent.ec-force.com/mcp/oauth/register
+  status: 200
+  note: RFC 7591 dynamic client registration returned a client_id with scope "mcp"
+- url: https://agent.ec-force.com/mcp/oauth/authorize
+  status: 200
+  note: HTML sign-in page
+- url: https://ec-force.com/information/20260804
+  status: 200
+  note: Launch announcement
+- url: https://mcp.ec-force.com/
+  status: 200
+  note: create-next-app placeholder, not an MCP server
+- url: https://support.ec-force.com/hc/ja
+  status: 403
+  note: FAQ carrying the connection procedure is not reachable by our crawler

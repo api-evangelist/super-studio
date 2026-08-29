@@ -1,0 +1,69 @@
+generated: '2026-08-29'
+method: searched
+source: https://ec-force.com/security
+note: >-
+  probe-security-programs.py returned vdp=none trust=none — it found no security.txt, no bug-bounty
+  listing and no recognised trust-center platform. That is correct: SUPER STUDIO runs no automated
+  trust portal. What it does publish is a first-party security page naming real certifications, so
+  this artifact is written by hand from that page and marked searched rather than probed.
+trust_center:
+  platform: none (first-party page)
+  url: https://ec-force.com/security
+  machine_readable: false
+  document_downloads: false
+  note: >-
+    No Vanta/Drata/SafeBase-style portal, no downloadable SOC report request flow, and no
+    certificate registration numbers are published. Certifications are stated as prose claims.
+certifications:
+- name: ISO/IEC 27001 (ISMS)
+  status: certified (claimed)
+  registration_number: not published
+- name: PrivacyMark (JIS Q 15001)
+  status: certified (claimed)
+  registration_number: not published
+- name: PCI DSS
+  status: compliant (claimed)
+  scope: credit card processing
+  level: not published
+- name: SOC 1 Type 1
+  status: report obtained (claimed)
+  report_access: not published
+- name: SOC 2 Type 1
+  status: report obtained (claimed)
+  report_access: not published
+  note: >-
+    Type 1, not Type 2 — a point-in-time design opinion rather than an operating-effectiveness
+    opinion over a period. Recorded exactly as stated.
+controls_published:
+- encryption at rest at the database level
+- TLS in transit
+- periodic third-party vulnerability assessment
+- two-factor authentication for admin accounts
+- IP address restriction for admin access
+- all customer data stored within Japan
+- supplier security review process
+- annual information-security training, new hires within 5 days
+- background/reference checks at hire
+- confidentiality agreements with employees and suppliers
+data_residency:
+  region: Japan
+  claim: All customer data is managed exclusively within Japan.
+vulnerability_disclosure:
+  program: none found
+  security_txt: absent
+  probed:
+  - url: https://ec-force.com/.well-known/security.txt
+    status: 404
+  - url: https://www.super-studio.jp/.well-known/security.txt
+    status: 404
+  - url: https://agent.ec-force.com/.well-known/security.txt
+    status: 404
+  bug_bounty: none found on HackerOne, Bugcrowd or Intigriti
+  note: >-
+    No VulnerabilityDisclosure artifact is written and no `Security` pointer is claimed, because
+    there is no published intake path for a security report. SUPER STUDIO states it commissions
+    third-party vulnerability assessments; it publishes no way for an outside researcher to report
+    one.
+  remediation: >-
+    Serve /.well-known/security.txt (RFC 9116) on ec-force.com and super-studio.jp naming a Contact
+    and a Policy URL. It is the cheapest single item on this page.

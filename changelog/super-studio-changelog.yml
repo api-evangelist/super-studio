@@ -1,0 +1,51 @@
+generated: '2026-08-29'
+method: searched
+source: https://ec-force.com/information
+note: >-
+  ecforce publishes dated product announcements at ec-force.com/information (URL slug is the date,
+  e.g. /information/20260804) and separately maintains dated theme-specification release notes at
+  docs.ec-force.com. Neither is an API changelog: there is no per-endpoint change log, no RSS or
+  JSON feed, and no versioned diff. Only entries with material API or agent-surface impact that
+  could be dated from a first-party page are listed below.
+scheme: dated product announcements (no semantic version on the API)
+current_version: v2
+feed: null
+changelog_url: https://ec-force.com/information
+theme_release_notes_url: https://docs.ec-force.com/
+entries:
+- date: '2026-08-04'
+  version: null
+  breaking: false
+  additions:
+  - >-
+    ecforce AI MCP connection feature released: external AI tools (Claude Code, Cursor, ChatGPT
+    app/Codex) can connect to ecforce AI over OAuth and read order and product data, query ecforce
+    AIdp, run ecforce bi analysis, set ecforce ma delivery and write LP template code. Paid ecforce
+    AI contracts only.
+  url: https://ec-force.com/information/20260804
+- date: '2025-11-27'
+  version: null
+  breaking: false
+  additions:
+  - Official API integration between ecforce and TikTok Shop announced.
+  url: https://www.super-studio.jp/news/20251127
+- date: '2022-12'
+  version: v1/admin
+  breaking: true
+  highlights:
+  - v1/admin reached end of life. Integrations were required to move to v2/admin.
+  url: https://support.ec-force.com/hc/ja/articles/6471240557081
+- date: '2022-04'
+  version: v2
+  breaking: false
+  additions:
+  - >-
+    ecforce API v2 formally released, splitting into v2/admin and v2/customer. Request format and
+    success responses unchanged from v1; error responses changed.
+  url: https://support.ec-force.com/hc/ja/articles/6471240557081
+package_release_cadence:
+  note: >-
+    The most reliably dated public change signal SUPER STUDIO emits is npm. The ecforce AI Agent
+    SDKs shipped 35 versions between 2025-09-11 and 2026-08-25 and both packages released the same
+    day, so the agent surface is under active weekly-scale development.
+  source: registry.npmjs.org

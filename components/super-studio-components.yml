@@ -1,0 +1,57 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  registry.npmjs.org metadata and READMEs for the first-party @super_studio scope, 2026-08-29, plus
+  https://docs.ec-force.com/ for the theme/Liquid surface.
+note: >-
+  Client-side and embeddable surfaces SUPER STUDIO ships, distinct from API client libraries. All
+  three families below are published by SUPER STUDIO itself.
+families:
+- family: ecforce AI Agent chat UI
+  kind: React component library
+  loader: "@super_studio/ecforce-ai-agent-react"
+  version: 1.5.0
+  published: '2026-08-25'
+  install: pnpm add @super_studio/ecforce-ai-agent-react
+  stylesheets:
+  - "@super_studio/ecforce-ai-agent-react/preset.css"
+  - "@super_studio/ecforce-ai-agent-react/chatbot-sheet.css"
+  components:
+  - name: ChatbotProvider
+    role: Context provider wrapping the app or the subtree that uses the chat UI.
+  - name: ChatbotSheet
+    role: Slide-over chat surface; takes an app name and a session-fetch function.
+  - name: ChatbotFrame
+    role: Inline/embedded chat surface.
+  - name: useChatbot
+    role: Hook for programmatic control of the chat surface.
+  backend_pairing: >-
+    Session tokens are minted server-side by @super_studio/ecforce-ai-agent-server
+    (client.internalChat.createSession) and handed to the component; the browser never holds the
+    API key. Defaults to production https://agent.ec-force.com with no URL configuration.
+- family: albers design system
+  kind: Component library
+  loader: "@super_studio/ecforce_ui_albers"
+  version: 6.1.0
+  published: '2026-08-25'
+  first_published: '2022-06-10'
+  license: MIT
+  description: The component library for ecforce's "albers" design system.
+- family: Futsuno Shop UI
+  kind: Component library
+  loader: "@super_studio/futsuno-ui"
+  version: 1.0.7
+  published: '2026-05-12'
+  license: MIT
+  description: D2C brand UI components for Futsuno Shop, a SUPER STUDIO-operated brand.
+storefront_templating:
+  kind: Server-side theme layer, not a component package
+  language: Liquid
+  docs: https://docs.ec-force.com/
+  description: >-
+    ecforce storefronts are built from Liquid themes with documented shop pages, layouts and partial
+    templates, plus a published (beta) Liquid object and page-variable reference. This is the
+    supported customisation surface for merchants who are not going headless.
+  agent_relevance: >-
+    The ecforce AI MCP server can write HTML/CSS/JavaScript straight into an LP template, so this
+    templating layer is also an agent write surface.

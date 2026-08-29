@@ -1,0 +1,72 @@
+generated: '2026-08-29'
+method: searched
+source: https://ec-force.com/product_plan
+currency: JPY
+billing_note: >-
+  All published ecforce plans are annual contracts quoted with a one-time initial fee plus a monthly
+  fee, exclusive of tax. Per-order overage is charged on top. API integration and webhooks are
+  separately contracted paid options on every plan — the pricing page does not list their price.
+plan_count: 4
+plans:
+- name: Standard
+  price_initial: 148000
+  price_monthly: 49800
+  currency: JPY
+  billing_period: annual contract, billed monthly
+  included_quota: up to 2,000 orders per month
+  overage: JPY 30 per order beyond the included volume
+  includes:
+  - all ecforce features
+  - AI-assisted FAQ site
+  - email and phone support
+  public_pricing: true
+- name: Expert
+  price_initial: 248000
+  price_monthly: 99800
+  currency: JPY
+  billing_period: annual contract, billed monthly
+  included_quota: no order-count cap
+  overage: JPY 30 per order
+  includes:
+  - all ecforce features
+  - AI-assisted FAQ site
+  - email and phone support
+  public_pricing: true
+- name: Migration
+  price_initial: quote
+  price_monthly: 99800
+  currency: JPY
+  billing_period: annual contract
+  includes:
+  - migration from an existing commerce platform
+  public_pricing: partial
+- name: Enterprise
+  price_initial: quote
+  price_monthly: quote
+  currency: JPY
+  includes:
+  - all features
+  - custom development
+  - enhanced security
+  - consulting
+  public_pricing: false
+add_ons:
+- name: API 連携オプション (API integration option)
+  price: not published
+  note: >-
+    An external-service API integration option must be contracted before the ecforce v2 API can be
+    called. Stated in the ecforce FAQ and in third-party integrator setup guides; not priced publicly.
+- name: Webhook オプション
+  price: not published
+  note: >-
+    Webhook delivery requires a separate option subscription — stated by SUPER STUDIO engineering at
+    https://zenn.dev/superstudio/articles/91debfc4c6cb40.
+- name: ecforce AI (paid tier)
+  price: not published
+  note: >-
+    The MCP connection feature is limited to paid ecforce AI contracts. ecforce AI meters usage in
+    credits with a per-project creditLimit, readable through the server SDK's
+    internalUsage.getUsageSummary(); the credit price is not published.
+related_products_priced_on_request:
+- ecforce data solution
+- ecforce consulting

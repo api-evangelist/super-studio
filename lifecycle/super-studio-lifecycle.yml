@@ -1,0 +1,70 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  SUPER STUDIO's own FAQ notice "ecforce APIバージョン2正式リリースのお知らせ"
+  (https://support.ec-force.com/hc/ja/articles/6471240557081), the ecforce theme guide release notes
+  at https://docs.ec-force.com/, and https://ec-force.com/information.
+note: >-
+  support.ec-force.com answers our crawler with 403 (Zendesk bot policy), so the v1/v2 dates below
+  were read from the indexed article rather than fetched directly. Recorded with that caveat rather
+  than dropped.
+versioning:
+  style: URL path segment
+  current: v2
+  surfaces:
+  - v2/admin
+  - v2/customer
+  released: '2022-04'
+  compatibility_note: >-
+    v2 preserved v1's request format and success-response specification; only error responses
+    changed. That is an unusually clean major-version migration and worth naming.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: not documented
+  deprecation_header: not documented
+  rfc8594: false
+  note: >-
+    There is no standing deprecation policy page. What exists is a per-version announcement practice
+    with a real, dated retirement — evidence of the behaviour, not of a published policy.
+  history:
+  - version: v1/admin
+    status: deprecated
+    announced: '2022-04'
+    end_of_life: '2022-12'
+    successor: v2/admin
+    notice_period_months: 8
+    source: https://support.ec-force.com/hc/ja/articles/6471240557081
+  - version: v2/admin
+    status: current
+    released: '2022-04'
+  - version: v2/customer
+    status: current
+    released: '2022-04'
+deprecated_operations:
+  derived_from_openapi: false
+  note: No OpenAPI is published, so no operation-level deprecation can be derived.
+status_page:
+  published: false
+  probed:
+  - url: https://status.ec-force.com/
+    status: DNS NXDOMAIN
+  - url: https://ecforce.statuspage.io/
+    status: 302
+    note: >-
+      Redirects to www.statuspage.io — an unclaimed Statuspage subdomain, not an ecforce status page.
+      Explicitly NOT wired as a StatusPage pointer.
+  incident_channel: >-
+    Operational notices are posted to the customer FAQ (support.ec-force.com) and to
+    https://ec-force.com/information; neither is a machine-readable status feed.
+sla:
+  published: false
+  note: >-
+    No public SLA, uptime target or credit schedule. The Enterprise plan advertises bespoke terms
+    negotiated with sales.
+support:
+  channels:
+  - email
+  - phone
+  - AI-assisted FAQ site
+  source: https://ec-force.com/product_plan

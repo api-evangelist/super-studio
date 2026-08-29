@@ -1,0 +1,125 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  npm registry search and metadata endpoints (registry.npmjs.org) for the first-party @super_studio
+  scope, plus RubyGems, PyPI and crates.io searches for "ecforce". Versions and dates read from
+  registry.npmjs.org metadata on 2026-08-29.
+note: >-
+  SUPER STUDIO publishes no general-purpose client library for the ecforce v2 REST API. The reference
+  client for that API is unpublished sample code inside github.com/super-studio/ecforce_headless
+  (src/lib/ecforce-sdk/), not a registry package. The published, versioned, first-party SDKs cover
+  the ecforce AI Agent product instead. RubyGems, PyPI and crates.io return nothing under
+  "ecforce" or "super studio".
+packages:
+- language: javascript
+  registry: npm
+  name: "@super_studio/ecforce-ai-agent-server"
+  url: https://www.npmjs.com/package/@super_studio/ecforce-ai-agent-server
+  install: pnpm add @super_studio/ecforce-ai-agent-server
+  official: true
+  version: 1.5.0
+  published: '2026-08-25'
+  first_published: '2025-09-11'
+  release_count: 35
+  note: >-
+    Server SDK for the ecforce AI Agent API. createClient() calls the internal API
+    (chat session issuance, terms status/accept, user resolve, /v1/internal/usage/summary);
+    spst() is a Vercel AI SDK provider that proxies OpenAI / Google Vertex / Anthropic through
+    ecforce so usage bills against a project. Default base https://agent.ec-force.com.
+- language: javascript
+  registry: npm
+  name: "@super_studio/ecforce-ai-agent-react"
+  url: https://www.npmjs.com/package/@super_studio/ecforce-ai-agent-react
+  install: pnpm add @super_studio/ecforce-ai-agent-react
+  official: true
+  version: 1.5.0
+  published: '2026-08-25'
+  first_published: '2025-09-09'
+  note: >-
+    React chat UI for the ecforce AI Agent — ChatbotProvider, ChatbotSheet, ChatbotFrame,
+    useChatbot(). Companion to the server SDK; released in lockstep with it.
+- language: javascript
+  registry: npm
+  name: "@super_studio/ecforce_ui_albers"
+  url: https://www.npmjs.com/package/@super_studio/ecforce_ui_albers
+  install: npm install @super_studio/ecforce_ui_albers
+  official: true
+  version: 6.1.0
+  published: '2026-08-25'
+  first_published: '2022-06-10'
+  license: MIT
+  note: Component library for the ecforce "albers" design system. UI, not an API client.
+- language: javascript
+  registry: npm
+  name: "@super_studio/futsuno-ui"
+  url: https://www.npmjs.com/package/@super_studio/futsuno-ui
+  install: npm install @super_studio/futsuno-ui
+  official: true
+  version: 1.0.7
+  published: '2026-05-12'
+  first_published: '2026-05-12'
+  license: MIT
+  note: Design system for Futsuno Shop, a SUPER STUDIO D2C brand. UI, not an API client.
+- language: javascript
+  registry: npm
+  name: "@super_studio/ecforce-nextra"
+  url: https://www.npmjs.com/package/@super_studio/ecforce-nextra
+  install: npm install @super_studio/ecforce-nextra
+  official: true
+  version: 0.1.10
+  published: '2026-02-13'
+  first_published: '2024-06-26'
+  license: MIT
+  note: SUPER STUDIO fork of Nextra used to build the ecforce documentation sites.
+- language: javascript
+  registry: npm
+  name: "@super_studio/ecforce-nextra-theme-docs"
+  url: https://www.npmjs.com/package/@super_studio/ecforce-nextra-theme-docs
+  install: npm install @super_studio/ecforce-nextra-theme-docs
+  official: true
+  version: 0.1.11
+  published: '2026-02-13'
+  first_published: '2024-06-26'
+  license: MIT
+- language: javascript
+  registry: npm
+  name: "@super_studio/ecforce-nextra-theme-blog"
+  url: https://www.npmjs.com/package/@super_studio/ecforce-nextra-theme-blog
+  install: npm install @super_studio/ecforce-nextra-theme-blog
+  official: true
+  version: 0.1.0
+  published: '2024-06-26'
+  first_published: '2024-06-26'
+  license: MIT
+- language: javascript
+  registry: npm
+  name: "@super_studio/mockup-upload"
+  url: https://www.npmjs.com/package/@super_studio/mockup-upload
+  install: npm install -g @super_studio/mockup-upload
+  official: true
+  version: 1.0.3
+  published: '2026-03-02'
+  first_published: '2026-02-27'
+  license: MIT
+  note: Internal CLI that uploads to SUPER STUDIO's mockup-library behind Cloudflare Access.
+third_party:
+- language: javascript
+  registry: npm
+  name: ecforce-theme-cli
+  url: https://www.npmjs.com/package/ecforce-theme-cli
+  official: false
+  version: 2.0.0
+  published: '2026-04-26'
+  license: ISC
+  note: >-
+    Community CLI for ecforce theme development (github.com/piouc/ecforce-theme-cli, maintainer
+    "piou"). Not a SUPER STUDIO package — recorded so it is not mistaken for one.
+registries_checked:
+- registry: npm
+  result: 8 first-party packages under the @super_studio scope
+- registry: rubygems
+  result: no packages matching "ecforce"; simplecov-github-report (a SUPER STUDIO GitHub repo) is not published to RubyGems
+- registry: pypi
+  result: 404 for "ecforce"
+- registry: crates.io
+  result: no match
