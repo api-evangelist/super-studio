@@ -13,6 +13,22 @@ description: >-
   design system. The API reference itself sits behind HTTP Basic auth at apidoc.ec-force.com and API
   integration is a paid contract option.
 url: https://raw.githubusercontent.com/api-evangelist/super-studio/refs/heads/main/apis.yml
+accessModel:
+  pricing: paid
+  onboarding: open
+  trial: false
+  try_now: false
+  public: true
+  label: Paid · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  - scopes
+  - rate-limits
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://www.super-studio.jp/superstudio_ogp.png?version=2
 x-type: company
 x-source: harvest:secondary-market
