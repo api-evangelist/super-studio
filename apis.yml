@@ -13,6 +13,21 @@ description: >-
   design system. The API reference itself sits behind HTTP Basic auth at apidoc.ec-force.com and API
   integration is a paid contract option.
 url: https://raw.githubusercontent.com/api-evangelist/super-studio/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - super-studio/ecforce_headless
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: open
