@@ -70,3 +70,35 @@ add_ons:
 related_products_priced_on_request:
 - ecforce data solution
 - ecforce consulting
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units: []
+  plans:
+  - name: Standard
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Expert
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Migration
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
