@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/super-studio/integrations
+- https://n8n.io/integrations/super-studio/
+- https://composio.dev/toolkits/super-studio
+- https://monid.ai/tools/super-studio
+checked:
+- https://composio.dev/toolkits/super-studio
+- https://monid.ai/tools/super-studio
+- https://n8n.io/integrations/super-studio/
+- https://zapier.com/apps/super-studio/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
