@@ -1,4 +1,4 @@
-# Super Studio
+# SUPER STUDIO
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,10 +64,130 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-SUPER STUDIO (株式会社SUPER STUDIO) is a Tokyo-based commerce software company founded in 2014 that builds **ecforce**, an AI commerce platform used by Japanese D2C and subscription brands. This profile covers three distinct API surfaces: the multi-tenant ecforce REST API v2 (JSON:API shaped, token authenticated, served from each merchant's own host), the ecforce AI Agent API at `agent.ec-force.com`, and an OAuth-protected remote MCP server launched 2026-08-04 for external AI tools.
+SUPER STUDIO (株式会社SUPER STUDIO) is a Tokyo-based commerce software company founded in 2014 that builds "ecforce", an AI commerce platform used by Japanese D2C and subscription brands for storefronts, order management, subscriptions, CRM, marketing automation and BI. The platform is multi-tenant and API-integrable: ecforce exposes a versioned REST admin/customer API (v2, JSON:API shaped, token authenticated) on each merchant's own shop host, a webhook surface signalled with an x-ecf-event header, and — since August 2026 — an OAuth-protected remote MCP server under agent.ec-force.com that lets external AI tools such as Claude Code, Cursor and the ChatGPT app read ecforce order and product data and drive ecforce bi, ma and AIdp. SUPER STUDIO also publishes first-party npm packages for the ecforce AI Agent (server SDK and React chat UI) and the "albers" design system. The API reference itself sits behind HTTP Basic auth at apidoc.ec-force.com and API integration is a paid contract option.
 
-- https://www.super-studio.jp/ — company
-- https://ec-force.com/ — ecforce product
-- https://github.com/super-studio — GitHub organization
+**Areas:** Company · E-Commerce · Commerce · Subscription Commerce · Order Management · Marketing Automation · Business Intelligence · Software-as-a-Service · Artificial Intelligence · Agents · MCP · Japan
 
-The previous `Website` pointer on this profile was `https://www.nasdaqprivatemarket.com/`, the secondary-market venue this company was harvested from. That is a trading venue's listing page, not SUPER STUDIO's web presence, and it has been replaced.
+## SUPER STUDIO on APIs.io
+
+Everything profiled for SUPER STUDIO is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/super-studio/](https://apis.io/providers/super-studio/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [ecforce API v2](https://apis.io/apis/super-studio/ecforce-api-v2/) — The ecforce platform REST API. Version 2 splits into v2/admin (administrator-scoped, mirroring the ecforce management screens) and v2/customer…
+- [ecforce AI Agent API](https://apis.io/apis/super-studio/ecforce-ai-agent-api/) — The internal HTTP API behind ecforce AI, called from the first-party @super_studio/ecforce-ai-agent-server npm SDK. It issues chat session tokens, resolves…
+- [ecforce AI MCP](https://apis.io/apis/super-studio/ecforce-ai-mcp/) — A remote, OAuth-protected Model Context Protocol server launched 2026-08-04 that lets external AI tools (Claude Code, Cursor, the ChatGPT app/Codex) read…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Super Studio Ecforce Webhooks](https://apis.io/asyncapis/super-studio/super-studio-ecforce-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [ecforce AI MCP](https://apis.io/servers/super-studio/ecforce-ai-mcp/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Super Studio Authentication](https://apis.io/security/super-studio/super-studio-authentication/)
+- [Super Studio Domain Security](https://apis.io/security/super-studio/super-studio-domain-security/)
+- [Super Studio Trust Center](https://apis.io/security/super-studio/super-studio-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Super Studio Scopes](https://apis.io/scopes/super-studio/super-studio-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Super Studio Plans Pricing](https://apis.io/plans/super-studio/super-studio-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Super Studio Rate Limits](https://apis.io/rate-limits/super-studio/super-studio-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.super-studio.jp/)
+- [Documentation](https://docs.ec-force.com/)
+- [Getting started](https://ec-force.com/startguide)
+- [API reference](https://apidoc.ec-force.com/apidoc/v2/admin/index.html)
+- [Pricing](https://ec-force.com/product_plan)
+- [Sign up](https://ec-force.com/contact/new)
+- [Support](https://ec-force.com/support)
+- [Blog](https://ec-force.com/blog/)
+- [Compliance](https://ec-force.com/security)
+- [Terms of service](https://ec-force.com/info/customer_term)
+- [Privacy policy](https://www.super-studio.jp/privacy)
+- [GitHub](https://github.com/super-studio)
+
+## API Evangelist rating
+
+**Kin Score 53.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 76.7 |
+| Contract quality | 39.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 51.2 |
+| Access clarity | 92.1 |
+
+**Agent readiness 39.1** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 36.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/super-studio/](https://apis.io/providers/super-studio/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for SUPER STUDIO: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/super-studio/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
